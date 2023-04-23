@@ -1,7 +1,7 @@
 {
   "name": "gab_server",
   "version": "1.0.0",
-  "description": "Gab's Back-End",
+  "description": "Gab's Back-End Server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "node",
+    "git",
     "react",
     "mysql"
   ],
@@ -20,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/gabsalvo/gab_library_v2/issues"
   },
-  "homepage": "https://github.com/gabsalvo/gab_library_v2#readme"
+  "homepage": "https://github.com/gabsalvo/gab_library_v2#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.22"
+  }
 }
