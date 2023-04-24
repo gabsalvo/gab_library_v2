@@ -15,7 +15,7 @@ app.get('/', (req,res) => {
     const sqlInsert = "INSERT INTO library_v2 (title, author) VALUES ('Test Titolo', 'Test Autore');"
     db.query(sqlInsert, (err, result) =>{
         res.send("Hello, Testing Database_V2");
-        console.log(res);
+        console.log("Changes on Database Done");
     });
 })
 
