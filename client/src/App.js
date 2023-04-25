@@ -46,7 +46,7 @@ function App() {
         <button onClick={newBook}>New</button>
         {bookList.map((val) => {
           return <p>Title: {val.title} | Author: {val.author}</p>
-        })};
+        })}
       </div>
     </div>
   )
