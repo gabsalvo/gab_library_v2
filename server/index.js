@@ -17,10 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/getBooks', (req, res) => {
     const sqlSelect = 
-    "SELECT * FROM library_v2.library_v2;";
+    "SELECT * FROM library_v2;";
     db.query(sqlSelect, (err, result) =>{
-        res.send("Hello, getBooks");
-        console.log(result);
+        res.send(result);
     });
 })
 
