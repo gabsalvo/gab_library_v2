@@ -17,9 +17,9 @@ function App() {
     Axios.post("http://localhost:3001/api/newBook", {
       title: title,
       author: author,
-    }).then(() => {
-      alert("successful newBook");
     });
+
+    setBookList([...bookList, { title: title, author: author }]);
   };
 
   return (
@@ -45,11 +45,15 @@ function App() {
         />
         <button onClick={newBook}>New</button>
         {bookList.map((val) => {
-          return <p>Title: {val.title} | Author: {val.author}</p>
+          return (
+            <p>
+              Title: {val.title} | Author: {val.author}
+            </p>
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 export default App;
