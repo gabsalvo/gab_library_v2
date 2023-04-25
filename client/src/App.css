@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+.card {
+  width: 500px;
+  height: 170px;
+  border: 2px solid black;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+#editInput {
+  width: 100px;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

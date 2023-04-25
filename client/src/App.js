@@ -46,9 +46,15 @@ function App() {
         <button onClick={newBook}>New</button>
         {bookList.map((val) => {
           return (
-            <p>
-              Title: {val.title} | Author: {val.author}
-            </p>
+            <div className="card">
+            <h1>{val.title}</h1>
+            <p>{val.author}</p>
+
+            <button>Delete</button>
+            <input type="text" id="editInput"></input>
+            <button>Edit</button>
+
+            </div>
           );
         })}
       </div>
