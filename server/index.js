@@ -15,15 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/getBooks', (req, res) => {
-    const sqlSelect = 
-    "SELECT * FROM library_v2;";
-    db.query(sqlSelect, (err, result) =>{
-        res.send(result);
-    });
-})
-
-
 app.post("/api/newBook", (req, res) => {
   const title = req.body.title;
   const author = req.body.author;
@@ -32,6 +23,24 @@ app.post("/api/newBook", (req, res) => {
     console.log(res);
   });
 });
+
+app.get('/api/getBooks', (req, res) => {
+  const sqlSelect = 
+  "SELECT * FROM library_v2;";
+  db.query(sqlSelect, (err, result) =>{
+      res.send(result);
+  });
+})
+
+app.delete('/api/deleteBook/:title', (req, res) => {
+  const name = req.params.title;
+  const sqlDelete = 
+  "DELETE FROM library_v2 WHERE title = ?;";
+
+  db.query(sqlDelete, name, (err, res) => {
+    if (err) console.log(err);
+  })
+})
 
 app.listen(3001, () => {
   console.log("Siamo sulla port 3001");

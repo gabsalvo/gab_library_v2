@@ -22,6 +22,10 @@ function App() {
     setBookList([...bookList, { title: title, author: author }]);
   };
 
+  const deleteBook = (title_delete) => {
+    Axios.delete(`http://localhost:3001/api/deleteBook/${title_delete}`);
+  };
+
   return (
     <div className="App">
       <h1>Gab Library</h1>
@@ -47,13 +51,12 @@ function App() {
         {bookList.map((val) => {
           return (
             <div className="card">
-            <h1>{val.title}</h1>
-            <p>{val.author}</p>
+              <h1>{val.title}</h1>
+              <p>{val.author}</p>
 
-            <button>Delete</button>
-            <input type="text" id="editInput"></input>
-            <button>Edit</button>
-
+              <button onClick={() => {deleteBook(val.title)}}>Delete</button>
+              <input type="text" id="editInput"></input>
+              <button>Edit</button>
             </div>
           );
         })}
