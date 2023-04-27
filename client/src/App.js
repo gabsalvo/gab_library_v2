@@ -21,12 +21,10 @@ function App() {
     });
 
     setBookList([...bookList, { title: title, author: author }]);
-
   };
 
   const deleteBook = (title_delete) => {
     Axios.delete(`http://localhost:3001/api/deleteBook/${title_delete}`);
-
   };
 
   const updateBook = (title) => {
@@ -35,7 +33,11 @@ function App() {
       author: newAuthor,
     });
     setNewAuthor("");
-    
+  };
+
+  const reset = () => {
+    setTitle("");
+    setAuthor("");
   };
 
   return (
@@ -47,6 +49,7 @@ function App() {
         <input
           type="text"
           name="title"
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
@@ -55,11 +58,19 @@ function App() {
         <input
           type="text"
           name="author"
+          value={author}
           onChange={(e) => {
             setAuthor(e.target.value);
           }}
         />
-        <button onClick={newBook}>New</button>
+        <button
+          onClick={() => {
+            newBook();
+            reset();
+          }}
+        >
+          New
+        </button>
         {bookList.map((val) => {
           return (
             <div className="card">
@@ -80,9 +91,13 @@ function App() {
                   setNewAuthor(e.target.value);
                 }}
               ></input>
-              <button onClick={() => {
-                updateBook(val.title)
-              }}>Edit</button>
+              <button
+                onClick={() => {
+                  updateBook(val.title);
+                }}
+              >
+                Edit
+              </button>
             </div>
           );
         })}
