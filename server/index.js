@@ -42,6 +42,16 @@ app.delete('/api/deleteBook/:title', (req, res) => {
   })
 })
 
+app.put("/api/updateBook", (req, res) => {
+  const title = req.body.title;
+  const author = req.body.author;
+  const sqlUpdate = "UPDATE library_v2 SET author = ? WHERE title = ?;";
+
+  db.query(sqlUpdate, [author, title], (err, result) => {
+    if (err) console.log(err);
+  })
+})
+
 app.listen(3001, () => {
   console.log("Siamo sulla port 3001");
 });

@@ -6,6 +6,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [bookList, setBookList] = useState([]);
+  const [newAuthor, setNewAuthor] = useState("");
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getBooks").then((response) => {
@@ -20,10 +21,21 @@ function App() {
     });
 
     setBookList([...bookList, { title: title, author: author }]);
+
   };
 
   const deleteBook = (title_delete) => {
     Axios.delete(`http://localhost:3001/api/deleteBook/${title_delete}`);
+
+  };
+
+  const updateBook = (title) => {
+    Axios.put(`http://localhost:3001/api/updateBook`, {
+      title: title,
+      author: newAuthor,
+    });
+    setNewAuthor("");
+    
   };
 
   return (
@@ -54,9 +66,23 @@ function App() {
               <h1>{val.title}</h1>
               <p>{val.author}</p>
 
-              <button onClick={() => {deleteBook(val.title)}}>Delete</button>
-              <input type="text" id="editInput"></input>
-              <button>Edit</button>
+              <button
+                onClick={() => {
+                  deleteBook(val.title);
+                }}
+              >
+                Delete
+              </button>
+              <input
+                type="text"
+                id="editInput"
+                onChange={(e) => {
+                  setNewAuthor(e.target.value);
+                }}
+              ></input>
+              <button onClick={() => {
+                updateBook(val.title)
+              }}>Edit</button>
             </div>
           );
         })}
