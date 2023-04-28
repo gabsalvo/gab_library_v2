@@ -7,7 +7,11 @@ function App() {
   const [author, setAuthor] = useState("");
   const [summary, setSummary] = useState("");
   const [bookList, setBookList] = useState([]);
-  const [newAuthor, setNewAuthor] = useState("");
+  const [newSummary, setNewSummary] = useState("");
+  const [isbn, setIsbn] = useState("");
+  const [added, setAdded] = useState("");
+  const [removed, setRemoved] = useState("");
+  const [read, setRead] = useState("");
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getBooks").then((response) => {
@@ -20,11 +24,13 @@ function App() {
       title: title,
       author: author,
       summary: summary,
+      isbn: isbn,
+      added: added,
     });
 
     setBookList([
       ...bookList,
-      { title: title, author: author, summary: summary },
+      { title: title, author: author },
     ]);
   };
 
@@ -35,9 +41,9 @@ function App() {
   const updateBook = (title) => {
     Axios.put(`http://localhost:3001/api/updateBook`, {
       title: title,
-      author: newAuthor,
+      summary: newSummary,
     });
-    setNewAuthor("");
+    setNewSummary("");
   };
 
   const reset = () => {
@@ -78,6 +84,15 @@ function App() {
             setSummary(e.target.value);
           }}
         />
+         <label>ISBN Code</label>
+        <input
+          type="text"
+          name="summary"
+          value={isbn}
+          onChange={(e) => {
+            setIsbn(e.target.value);
+          }}
+        />
         <button
           onClick={() => {
             newBook();
@@ -91,7 +106,6 @@ function App() {
             <div key={val.title} className="card">
               <h1>{val.title}</h1>
               <p>{val.author}</p>
-              <p>{val.summary}</p>
 
               <button
                 onClick={() => {
@@ -104,7 +118,7 @@ function App() {
                 type="text"
                 id="editInput"
                 onChange={(e) => {
-                  setNewAuthor(e.target.value);
+                  setNewSummary(e.target.value);
                 }}
               ></input>
               <button
