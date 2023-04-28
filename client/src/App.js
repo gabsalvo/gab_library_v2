@@ -5,6 +5,7 @@ import Axios from "axios";
 function App() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [summary, setSummary] = useState("");
   const [bookList, setBookList] = useState([]);
   const [newAuthor, setNewAuthor] = useState("");
 
@@ -18,9 +19,13 @@ function App() {
     Axios.post("http://localhost:3001/api/newBook", {
       title: title,
       author: author,
+      summary: summary,
     });
 
-    setBookList([...bookList, { title: title, author: author }]);
+    setBookList([
+      ...bookList,
+      { title: title, author: author, summary: summary },
+    ]);
   };
 
   const deleteBook = (title_delete) => {
@@ -63,6 +68,15 @@ function App() {
             setAuthor(e.target.value);
           }}
         />
+        <label>Summary</label>
+        <input
+          type="text"
+          name="summary"
+          value={summary}
+          onChange={(e) => {
+            setSummary(e.target.value);
+          }}
+        />
         <button
           onClick={() => {
             newBook();
@@ -73,9 +87,10 @@ function App() {
         </button>
         {bookList.map((val) => {
           return (
-            <div className="card">
+            <div key={val.title} className="card">
               <h1>{val.title}</h1>
               <p>{val.author}</p>
+              <p>{val.summary}</p>
 
               <button
                 onClick={() => {

@@ -18,8 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/api/newBook", (req, res) => {
   const title = req.body.title;
   const author = req.body.author;
-  const sqlInsert = "INSERT INTO library_v2 (title, author) VALUES (?,?);";
-  db.query(sqlInsert, [title, author], (err, res) => {
+  const summary = req.body.summary;
+  const sqlInsert = "INSERT INTO library_v2 (title, author, summary) VALUES (?,?,?);";
+  db.query(sqlInsert, [title, author, summary], (err, res) => {
     console.log(res);
   });
 });
