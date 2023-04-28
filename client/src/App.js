@@ -4,7 +4,9 @@ import Axios from "axios";
 import Login from "./Login";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!sessionStorage.getItem("isLoggedIn")
+  );
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [summary, setSummary] = useState("");
@@ -15,11 +17,25 @@ function App() {
   const [removed, setRemoved] = useState("");
   const [read, setRead] = useState("");
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    sessionStorage.setItem("isLoggedIn", "true");
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    sessionStorage.removeItem("isLoggedIn");
+  };
+
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getBooks").then((response) => {
       setBookList(response.data);
     });
   }, []);
+
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   const newBook = () => {
     Axios.post("http://localhost:3001/api/newBook", {
@@ -30,22 +46,24 @@ function App() {
       added: added,
     });
 
-    setBookList([
-      ...bookList,
-      { title: title, author: author },
-    ]);
+    setBookList([...bookList, { title: title, author: author }]);
   };
 
   const deleteBook = (title_delete) => {
     Axios.delete(`http://localhost:3001/api/deleteBook/${title_delete}`);
+    setBookList(bookList.filter((book) => book.title !== title_delete));
   };
 
   const updateBook = (title) => {
     Axios.put(`http://localhost:3001/api/updateBook`, {
       title: title,
       summary: newSummary,
+    }).then(() => {
+      Axios.get("http://localhost:3001/api/getBooks").then((response) => {
+        setBookList(response.data);
+      });
+      setNewSummary("");
     });
-    setNewSummary("");
   };
 
   const reset = () => {
@@ -53,15 +71,6 @@ function App() {
     setAuthor("");
     setSummary("");
   };
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  if (!loggedIn) {
-    return <Login onLogin={handleLogin} />;
-  }
-
 
   return (
     <div className="App">
@@ -95,7 +104,7 @@ function App() {
             setSummary(e.target.value);
           }}
         />
-         <label>ISBN Code</label>
+        <label>ISBN Code</label>
         <input
           type="text"
           name="summary"
@@ -112,11 +121,13 @@ function App() {
         >
           New
         </button>
+        <button onClick={handleLogout}>Logout</button>
         {bookList.map((val) => {
           return (
             <div key={val.title} className="card">
               <h1>{val.title}</h1>
               <p>{val.author}</p>
+              <p>{val.summary}</p>
 
               <button
                 onClick={() => {

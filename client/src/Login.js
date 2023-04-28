@@ -4,27 +4,31 @@ function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Perform some authentication logic here, e.g. send a request to a server
-    // and check the credentials against a database
-    // For simplicity, we'll just hardcode the credentials here
-    if (username === "admin" && password === "password") {
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (username && password) {
       onLogin();
-    } else {
-      alert("Invalid username or password");
     }
   };
 
   return (
-    <div>
+    <div className="login">
       <h1>Login</h1>
-      <label>Username:</label>
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <br />
-      <label>Password:</label>
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <br />
-      <button onClick={handleLogin}>Login</button>
+      <form onSubmit={handleLogin}>
+        <label>Username</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
