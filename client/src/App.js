@@ -70,7 +70,12 @@ function App() {
     setTitle("");
     setAuthor("");
     setSummary("");
+    setIsbn("");
   };
+
+  const count_books = () => {
+    return bookList.length;
+  }
 
   return (
     <div className="App">
@@ -122,12 +127,12 @@ function App() {
           New
         </button>
         <button onClick={handleLogout}>Logout</button>
+        <h2>Books in my library: {count_books()}</h2>
         {bookList.map((val) => {
           return (
             <div key={val.title} className="card">
               <h1>{val.title}</h1>
               <p>{val.author}</p>
-              <p>{val.summary}</p>
 
               <button
                 onClick={() => {
