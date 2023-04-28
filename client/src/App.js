@@ -43,6 +43,7 @@ function App() {
   const reset = () => {
     setTitle("");
     setAuthor("");
+    setSummary("");
   };
 
   return (
