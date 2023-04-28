@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
+import Login from "./Login";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [summary, setSummary] = useState("");
@@ -51,6 +53,15 @@ function App() {
     setAuthor("");
     setSummary("");
   };
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
+  if (!loggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
+
 
   return (
     <div className="App">
