@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
 import Login from "./Login";
+import Footer from "./Footer";
 import AddBookPopup from "./AddBookPopup";
 import UpdateBookPopup from "./UpdateBookPopup";
 
@@ -102,8 +103,6 @@ function App() {
               </div>
             ))}
           </div>
-          <h2>Books in my library: {count_books()}</h2>
-          <button onClick={handleLogout}>Logout</button>
         </div>
         {selectedBook && (
           <div className="book-details">
@@ -118,6 +117,7 @@ function App() {
             <button onClick={() => setIsPopupVisibleUpdate(true)}>Edit</button>
           </div>
         )}
+        <Footer bookCount={count_books} onLogout={handleLogout} />
       </div>
     </div>
   );
