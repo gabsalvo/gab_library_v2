@@ -50,23 +50,18 @@ app.delete('/api/deleteBook/:title', (req, res) => {
 
 app.put("/api/updateBook", (req, res) => {
   const title = req.body.title;
+  const author = req.body.author;
   const summary = req.body.summary;
-  const sqlUpdate = "UPDATE library_v2 SET summary = ? WHERE title = ?;";
+  const isbn = req.body.isbn;
+  const added = req.body.added;
+  const sqlUpdate = "UPDATE library_v2 SET author = ?, summary = ?, isbn = ?, added = CURDATE() WHERE title = ?;";
 
-  db.query(sqlUpdate, [summary, title], (err, result) => {
+  db.query(sqlUpdate, [author, summary, isbn, title], (err, result) => {
     if (err) console.log(err);
-  })
-})
+  });
+});
 
 app.listen(3001, () => {
   console.log("Siamo sulla port 3001");
 });
 
-/*app.get('/api/newBook', (req,res) => {
-
-    const sqlInsert = "INSERT INTO library_v2 (title, author) VALUES ('Test Titolo', 'Test Autore');"
-    db.query(sqlInsert, (err, result) =>{
-        res.send("Hello, Testing Database_V2");
-        console.log("Changes on Database Done");
-    });
-});*/

@@ -3,18 +3,15 @@ import "./App.css";
 import Axios from "axios";
 import Login from "./Login";
 import AddBookPopup from "./AddBookPopup";
+import UpdateBookPopup from "./UpdateBookPopup";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!sessionStorage.getItem("isLoggedIn")
   );
-  const setTitle = useState("");
-  const setAuthor = useState("");
-  const setSummary = useState("");
   const [bookList, setBookList] = useState([]);
-  const [newSummary, setNewSummary] = useState("");
-  const setIsbn = useState("");
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isPopupVisibleAdd, setIsPopupVisibleAdd] = useState(false);
+  const [isPopupVisibleUpdate, setIsPopupVisibleUpdate] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
   const handleLogin = () => {
@@ -52,26 +49,27 @@ function App() {
     setBookList(bookList.filter((book) => book.title !== title_delete));
   };
 
-  const updateBook = (title) => {
+  const updateBook = (title, updatedBook) => {
     Axios.put(`http://localhost:3001/api/updateBook`, {
       title: title,
-      summary: newSummary,
+      author: updatedBook.author,
+      summary: updatedBook.summary,
+      isbn: updatedBook.isbn,
+      added: updatedBook.added,
     }).then(() => {
       Axios.get("http://localhost:3001/api/getBooks").then((response) => {
         setBookList(response.data);
       });
-      setNewSummary("");
     });
   };
 
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
-  
 
   const count_books = () => {
     return bookList.length;
@@ -81,13 +79,18 @@ function App() {
     <div className="App">
       <AddBookPopup
         onSubmit={(book) => newBook(book)}
-        onClose={() => setIsPopupVisible(false)}
-        isVisible={isPopupVisible}
+        onClose={() => setIsPopupVisibleAdd(false)}
+        isVisible={isPopupVisibleAdd}
+      />
+      <UpdateBookPopup
+        onSubmit={(updatedBook) => updateBook(selectedBook.title, updatedBook)}
+        onClose={() => setIsPopupVisibleUpdate(false)}
+        isVisible={isPopupVisibleUpdate}
       />
       <div className="container">
         <div className="left-column">
           <h1>Gab Library</h1>
-          <button onClick={() => setIsPopupVisible(true)}>New</button>
+          <button onClick={() => setIsPopupVisibleAdd(true)}>New</button>
           <div className="book-list">
             {bookList.map((val) => (
               <div
@@ -112,12 +115,7 @@ function App() {
             <button onClick={() => deleteBook(selectedBook.title)}>
               Delete
             </button>
-            <input
-              type="text"
-              id="editInput"
-              onChange={(e) => setNewSummary(e.target.value)}
-            ></input>
-            <button onClick={() => updateBook(selectedBook.title)}>Edit</button>
+            <button onClick={() => setIsPopupVisibleUpdate(true)}>Edit</button>
           </div>
         )}
       </div>
