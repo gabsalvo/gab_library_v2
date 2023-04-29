@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
 import Login from "./Login";
+import AddBookPopup from "./AddBookPopup";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -16,6 +17,7 @@ function App() {
   const [added, setAdded] = useState("");
   const [removed, setRemoved] = useState("");
   const [read, setRead] = useState("");
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -37,16 +39,10 @@ function App() {
     return <Login onLogin={handleLogin} />;
   }
 
-  const newBook = () => {
-    Axios.post("http://localhost:3001/api/newBook", {
-      title: title,
-      author: author,
-      summary: summary,
-      isbn: isbn,
-      added: added,
-    });
+  const newBook = (book) => {
+    Axios.post("http://localhost:3001/api/newBook", book);
 
-    setBookList([...bookList, { title: title, author: author }]);
+    setBookList([...bookList, book]);
   };
 
   const deleteBook = (title_delete) => {
@@ -75,59 +71,18 @@ function App() {
 
   const count_books = () => {
     return bookList.length;
-  }
+  };
 
   return (
     <div className="App">
       <h1>Gab Library</h1>
-
-      <div className="add_new_book">
-        <label>Book Title</label>
-        <input
-          type="text"
-          name="title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-        <label>Author</label>
-        <input
-          type="text"
-          name="author"
-          value={author}
-          onChange={(e) => {
-            setAuthor(e.target.value);
-          }}
-        />
-        <label>Summary</label>
-        <input
-          type="text"
-          name="summary"
-          value={summary}
-          onChange={(e) => {
-            setSummary(e.target.value);
-          }}
-        />
-        <label>ISBN Code</label>
-        <input
-          type="text"
-          name="summary"
-          value={isbn}
-          onChange={(e) => {
-            setIsbn(e.target.value);
-          }}
-        />
-        <button
-          onClick={() => {
-            newBook();
-            reset();
-          }}
-        >
-          New
-        </button>
-      </div>
-      <div className="book-list">  
+      <AddBookPopup
+        onSubmit={(book) => newBook(book)}
+        onClose={() => setIsPopupVisible(false)}
+        isVisible={isPopupVisible}
+      />
+      <button onClick={() => setIsPopupVisible(true)}>New</button>
+      <div className="book-list">
         {bookList.map((val) => {
           return (
             <div key={val.title} className="card">
