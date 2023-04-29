@@ -126,8 +126,8 @@ function App() {
         >
           New
         </button>
-        <button onClick={handleLogout}>Logout</button>
-        <h2>Books in my library: {count_books()}</h2>
+      </div>
+      <div className="book-list">  
         {bookList.map((val) => {
           return (
             <div key={val.title} className="card">
@@ -158,6 +158,8 @@ function App() {
             </div>
           );
         })}
+        <button onClick={handleLogout}>Logout</button>
+        <h2>Books in my library: {count_books()}</h2>
       </div>
     </div>
   );
