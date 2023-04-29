@@ -27,13 +27,16 @@ app.post("/api/newBook", (req, res) => {
   });
 });
 
-app.get('/api/getBooks', (req, res) => {
-  const sqlSelect = 
-  "SELECT * FROM library_v2;";
-  db.query(sqlSelect, (err, result) =>{
+app.get("/api/getBooks", (req, res) => {
+  const sqlSelect = "SELECT title, author, summary, isbn, added FROM library_v2";
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
       res.send(result);
+    }
   });
-})
+});
 
 app.delete('/api/deleteBook/:title', (req, res) => {
   const name = req.params.title;

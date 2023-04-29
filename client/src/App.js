@@ -8,16 +8,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!sessionStorage.getItem("isLoggedIn")
   );
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [summary, setSummary] = useState("");
+  const setTitle = useState("");
+  const setAuthor = useState("");
+  const setSummary = useState("");
   const [bookList, setBookList] = useState([]);
   const [newSummary, setNewSummary] = useState("");
-  const [isbn, setIsbn] = useState("");
-  const [added, setAdded] = useState("");
-  const [removed, setRemoved] = useState("");
-  const [read, setRead] = useState("");
+  const setIsbn = useState("");
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -27,6 +25,10 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     sessionStorage.removeItem("isLoggedIn");
+  };
+
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
   };
 
   useEffect(() => {
@@ -62,12 +64,14 @@ function App() {
     });
   };
 
-  const reset = () => {
-    setTitle("");
-    setAuthor("");
-    setSummary("");
-    setIsbn("");
-  };
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
 
   const count_books = () => {
     return bookList.length;
@@ -75,46 +79,47 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Gab Library</h1>
       <AddBookPopup
         onSubmit={(book) => newBook(book)}
         onClose={() => setIsPopupVisible(false)}
         isVisible={isPopupVisible}
       />
-      <button onClick={() => setIsPopupVisible(true)}>New</button>
-      <div className="book-list">
-        {bookList.map((val) => {
-          return (
-            <div key={val.title} className="card">
-              <h1>{val.title}</h1>
-              <p>{val.author}</p>
-
-              <button
-                onClick={() => {
-                  deleteBook(val.title);
-                }}
+      <div className="container">
+        <div className="left-column">
+          <h1>Gab Library</h1>
+          <button onClick={() => setIsPopupVisible(true)}>New</button>
+          <div className="book-list">
+            {bookList.map((val) => (
+              <div
+                key={val.title}
+                className="list-item"
+                onClick={() => handleBookClick(val)}
               >
-                Delete
-              </button>
-              <input
-                type="text"
-                id="editInput"
-                onChange={(e) => {
-                  setNewSummary(e.target.value);
-                }}
-              ></input>
-              <button
-                onClick={() => {
-                  updateBook(val.title);
-                }}
-              >
-                Edit
-              </button>
-            </div>
-          );
-        })}
-        <button onClick={handleLogout}>Logout</button>
-        <h2>Books in my library: {count_books()}</h2>
+                {val.title}
+              </div>
+            ))}
+          </div>
+          <h2>Books in my library: {count_books()}</h2>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+        {selectedBook && (
+          <div className="book-details">
+            <h1>{selectedBook.title}</h1>
+            <h3>{selectedBook.author}</h3>
+            <p>{selectedBook.summary}</p>
+            <p>ISBN: {selectedBook.isbn}</p>
+            <p>Added: {formatDate(selectedBook.added)}</p>
+            <button onClick={() => deleteBook(selectedBook.title)}>
+              Delete
+            </button>
+            <input
+              type="text"
+              id="editInput"
+              onChange={(e) => setNewSummary(e.target.value)}
+            ></input>
+            <button onClick={() => updateBook(selectedBook.title)}>Edit</button>
+          </div>
+        )}
       </div>
     </div>
   );
