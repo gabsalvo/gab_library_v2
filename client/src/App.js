@@ -89,8 +89,8 @@ function App() {
       />
       <div className="container">
         <div className="left-column">
-          <h1>Gab Library</h1>
-          <button className="app-button .app-button-small" onClick={() => setIsPopupVisibleAdd(true)}>New</button>
+          <h1 class="gab_pointer" onClick={() => setSelectedBook(null)}>Gab Library</h1>
+          <button className="app-button" onClick={() => setIsPopupVisibleAdd(true)}>New</button>
           <div className="book-list">
             {bookList.map((val) => (
               <div
@@ -103,8 +103,8 @@ function App() {
             ))}
           </div>
           <div className="bottom-controls">
-            <h2>Books in my library: {count_books()}</h2>
-            <button className="app-button .app-button-small" onClick={handleLogout}>Logout</button>
+            <h2>Books owned: {count_books()}</h2>
+            <button className="app-button" onClick={handleLogout}>Logout</button>
           </div>
         </div>
         {selectedBook && (
@@ -114,7 +114,7 @@ function App() {
             <p>{selectedBook.summary}</p>
             <p>ISBN: {selectedBook.isbn}</p>
             <p>Added: {formatDate(selectedBook.added)}</p>
-            <button className="app-button" onClick={() => deleteBook(selectedBook.title)}>
+            <button className="app-button app-button-margin-right" onClick={() => deleteBook(selectedBook.title)}>
               Delete
             </button>
             <button className="app-button" onClick={() => setIsPopupVisibleUpdate(true)}>Edit</button>
