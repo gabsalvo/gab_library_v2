@@ -21,17 +21,29 @@ app.post("/api/newBook", (req, res) => {
   const summary = req.body.summary;
   const isbn = req.body.isbn;
   const added = req.body.added;
-  const read = req.body.read;
+  const times = req.body.times;
   const sqlInsert =
-    "INSERT INTO library_v2 (title, author, summary, isbn, added, `read`) VALUES (?,?,?,?,curdate(),?);";
-  db.query(sqlInsert, [title, author, summary, isbn, added, read], (err, res) => {
+    "INSERT INTO `library_v2`.`library_v2` (title, author, summary, isbn, added, times) VALUES (?,?,?,?,curdate(),?);";
+  db.query(sqlInsert, [title, author, summary, isbn, added, times], (err, res) => {
     console.log(res);
   });
 });
 
+app.put("/api/updateSingleField", (req, res) => {
+  const title = req.body.title;
+  const field = req.body.field;
+  const value = req.body.value;
+  const sqlUpdate = `UPDATE library_v2 SET ${field} = ? WHERE title = ?;`;
+
+  db.query(sqlUpdate, [value, title], (err, result) => {
+    if (err) console.log(err);
+  });
+});
+``
+
 app.get("/api/getBooks", (req, res) => {
   const sqlSelect =
-    "SELECT title, author, summary, isbn, added, `read` FROM library_v2";
+    "SELECT title, author, summary, isbn, added, `times` FROM library_v2";
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.log(err);
@@ -55,11 +67,11 @@ app.put("/api/updateBook", (req, res) => {
   const author = req.body.author;
   const summary = req.body.summary;
   const isbn = req.body.isbn;
-  const read = req.body.read;
+  const times = req.body.times;
   const sqlUpdate =
-    "UPDATE library_v2 SET author = ?, summary = ?, isbn = ?, added = CURDATE(), `read` = ? WHERE title = ?;";
+    "UPDATE library_v2 SET author = ?, summary = ?, isbn = ?, added = CURDATE(), times = ? WHERE title = ?;";
 
-  db.query(sqlUpdate, [author, summary, isbn, read, title], (err, result) => {
+  db.query(sqlUpdate, [author, summary, isbn, times, title], (err, result) => {
     if (err) console.log(err);
   });
 });
