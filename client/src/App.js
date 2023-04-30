@@ -63,6 +63,12 @@ function App() {
     });
   };
 
+  const updateCounter = (title) => {
+    Axios.put(`http://localhost:3001/api/updateCounter`, {
+      title: title,
+    });
+  }
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -114,6 +120,7 @@ function App() {
             <p>{selectedBook.summary}</p>
             <p>ISBN: {selectedBook.isbn}</p>
             <p>Added: {formatDate(selectedBook.added)}</p>
+            <p>I've Read this book {selectedBook.read} time(s)</p>
             <button className="app-button app-button-margin-right" onClick={() => deleteBook(selectedBook.title)}>
               Delete
             </button>
