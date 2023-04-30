@@ -5,15 +5,15 @@ const AddBookPopup = ({ onSubmit, onClose, isVisible }) => {
   const [author, setAuthor] = useState("");
   const [summary, setSummary] = useState("");
   const [isbn, setIsbn] = useState("");
-  const [read, setRead] = useState(0);
+  const [times, setTimes] = useState(0);
 
   const handleSubmit = () => {
-    onSubmit({ title, author, summary, isbn, read });
+    onSubmit({ title, author, summary, isbn, times });
     setTitle("");
     setAuthor("");
     setSummary("");
     setIsbn("");
-    setRead(0);
+    setTimes(0);
     onClose();
   };
 
@@ -49,8 +49,8 @@ const AddBookPopup = ({ onSubmit, onClose, isVisible }) => {
          <label>Many Times Read</label>
         <input
           type="number"
-          value={read}
-          onChange={(e) => setRead(e.target.value)}
+          value={times}
+          onChange={(e) => setTimes(e.target.value)}
         />
         <button
           className="app-button app-button-margin-right"
