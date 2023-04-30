@@ -28,8 +28,8 @@ const AddBookPopup = ({ onSubmit, onClose, isVisible }) => {
         <input type="text" value={summary} onChange={(e) => setSummary(e.target.value)} />
         <label>ISBN Code</label>
         <input type="text" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={onClose}>Close</button>
+        <button className="app-button app-button-margin-right" onClick={handleSubmit}>Submit</button>
+        <button className="app-button" onClick={onClose}>Close</button>
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
 import Login from "./Login";
-import Footer from "./Footer";
 import AddBookPopup from "./AddBookPopup";
 import UpdateBookPopup from "./UpdateBookPopup";
 
@@ -91,7 +90,7 @@ function App() {
       <div className="container">
         <div className="left-column">
           <h1>Gab Library</h1>
-          <button onClick={() => setIsPopupVisibleAdd(true)}>New</button>
+          <button className="app-button .app-button-small" onClick={() => setIsPopupVisibleAdd(true)}>New</button>
           <div className="book-list">
             {bookList.map((val) => (
               <div
@@ -103,6 +102,10 @@ function App() {
               </div>
             ))}
           </div>
+          <div className="bottom-controls">
+            <h2>Books in my library: {count_books()}</h2>
+            <button className="app-button .app-button-small" onClick={handleLogout}>Logout</button>
+          </div>
         </div>
         {selectedBook && (
           <div className="book-details">
@@ -111,13 +114,12 @@ function App() {
             <p>{selectedBook.summary}</p>
             <p>ISBN: {selectedBook.isbn}</p>
             <p>Added: {formatDate(selectedBook.added)}</p>
-            <button onClick={() => deleteBook(selectedBook.title)}>
+            <button className="app-button" onClick={() => deleteBook(selectedBook.title)}>
               Delete
             </button>
-            <button onClick={() => setIsPopupVisibleUpdate(true)}>Edit</button>
+            <button className="app-button" onClick={() => setIsPopupVisibleUpdate(true)}>Edit</button>
           </div>
         )}
-        <Footer bookCount={count_books} onLogout={handleLogout} />
       </div>
     </div>
   );
