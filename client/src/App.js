@@ -47,7 +47,7 @@ function App() {
         setBookList(response.data);
       });
     });
-  
+
     setIsPopupVisibleSingleUpdate(false);
   };
 
@@ -112,14 +112,14 @@ function App() {
         isVisible={isPopupVisibleUpdate}
       />
       {isPopupVisibleSingleUpdate && (
-      <SingleUpdatePopup
-        selectedUpdateField={selectedUpdateField}
-        singleUpdateValue={singleUpdateValue}
-        setSingleUpdateValue={setSingleUpdateValue}
-        updateSingleField={updateSingleField}
-        setIsPopupVisibleSingleUpdate={setIsPopupVisibleSingleUpdate}
-      />
-    )}
+        <SingleUpdatePopup
+          selectedUpdateField={selectedUpdateField}
+          singleUpdateValue={singleUpdateValue}
+          setSingleUpdateValue={setSingleUpdateValue}
+          updateSingleField={updateSingleField}
+          setIsPopupVisibleSingleUpdate={setIsPopupVisibleSingleUpdate}
+        />
+      )}
       <div className="container">
         <div className="left-column">
           <h1 class="gab_pointer" onClick={() => setSelectedBook(null)}>
@@ -163,7 +163,11 @@ function App() {
             >
               Delete
             </button>
-            <select className="dropdown" onChange={handleUpdateFieldChange}>
+            <select
+              className="dropdown"
+              onChange={handleUpdateFieldChange}
+              value={selectedUpdateField}
+            >
               <option value="">Select field to update</option>
               <option value="all">All</option>
               <option value="author">Author</option>
@@ -176,9 +180,8 @@ function App() {
               onClick={() => {
                 if (selectedUpdateField === "all") {
                   setIsPopupVisibleUpdate(true);
-                }
-                else {
-                  setIsPopupVisibleUpdate(true);
+                } else if (selectedUpdateField) {
+                  setIsPopupVisibleSingleUpdate(true);
                 }
               }}
             >
