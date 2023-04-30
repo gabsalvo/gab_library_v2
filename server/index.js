@@ -23,7 +23,7 @@ app.post("/api/newBook", (req, res) => {
   const added = req.body.added;
   const read = req.body.read;
   const sqlInsert =
-    "INSERT INTO library_v2 (title, author, summary, isbn, added, `read`) VALUES (?,?,?,?,curdate());";
+    "INSERT INTO library_v2 (title, author, summary, isbn, added, `read`) VALUES (?,?,?,?,curdate(),?);";
   db.query(sqlInsert, [title, author, summary, isbn, added, read], (err, res) => {
     console.log(res);
   });
