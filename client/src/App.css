@@ -120,7 +120,7 @@
 }
 
 .list-item:hover {
-  background-color: #eee;
+  background-color: #d1c1c1;
   text-decoration: none;
 }
 
@@ -130,6 +130,27 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.dropdown {
+  background-color: #f8f4ec;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown:focus {
+  outline: none;
+}
+
+.dropdown:hover {
+  background-color: #eee;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .gab_pointer {

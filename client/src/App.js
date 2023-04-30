@@ -163,7 +163,7 @@ function App() {
             >
               Delete
             </button>
-            <select onChange={handleUpdateFieldChange}>
+            <select className="dropdown" onChange={handleUpdateFieldChange}>
               <option value="">Select field to update</option>
               <option value="all">All</option>
               <option value="author">Author</option>
@@ -176,8 +176,9 @@ function App() {
               onClick={() => {
                 if (selectedUpdateField === "all") {
                   setIsPopupVisibleUpdate(true);
-                } else {
-                  setIsPopupVisibleSingleUpdate(true);
+                }
+                else {
+                  setIsPopupVisibleUpdate(true);
                 }
               }}
             >

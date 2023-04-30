@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Login.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -6,8 +7,11 @@ function Login({ onLogin }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (username && password) {
+    if (username=="gab" && password=="password") {
       onLogin();
+    }
+    else {
+      alert("Invalid Login, try: gab, password")
     }
   };
 

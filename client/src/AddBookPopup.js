@@ -13,10 +13,9 @@ const AddBookPopup = ({ onSubmit, onClose, isVisible }) => {
     setAuthor("");
     setSummary("");
     setIsbn("");
-    setTimes(0);
+    setTimes(0); // Update this line
     onClose();
-  };
-
+};
   if (!isVisible) return null;
 
   return (
