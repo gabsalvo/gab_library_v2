@@ -5,10 +5,10 @@ const app = express();
 const mysql = require("mysql");
 
 const db = mysql.createPool({
-  host: "localhost", // Change this line
-  user: "gabriele",
-  password: "password123!",
-  database: "gab_library_v2",
+  host: process.env.DATABASE_HOST || "localhost",
+  user: process.env.DATABASE_USER || "gabriele",
+  password: process.env.DATABASE_PASSWORD || "password123!",
+  database: process.env.DATABASE_NAME || "gab_library_v2",
 });
 
 app.use(cors());

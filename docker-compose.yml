@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  client:
+    build: ./client
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+
+  server:
+    build: ./server
+    ports:
+      - 3001:3001
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=gabriele
+      - DATABASE_PASSWORD=password123!
+      - DATABASE_NAME=gab_library_v2
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=gab_library_v2
+      - MYSQL_USER=gabriele
+      - MYSQL_PASSWORD=password123!
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
