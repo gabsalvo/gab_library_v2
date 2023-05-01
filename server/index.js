@@ -5,7 +5,7 @@ const app = express();
 const mysql = require("mysql");
 
 const db = mysql.createPool({
-  host: "localhost",
+  host: "localhost", // Change this line
   user: "gabriele",
   password: "password123!",
   database: "gab_library_v2",
@@ -24,9 +24,13 @@ app.post("/api/newBook", (req, res) => {
   const times = req.body.times;
   const sqlInsert =
     "INSERT INTO `books` (title, author, summary, isbn, added, times) VALUES (?,?,?,?,curdate(),?);";
-  db.query(sqlInsert, [title, author, summary, isbn, added, times], (err, res) => {
-    console.log(res);
-  });
+  db.query(
+    sqlInsert,
+    [title, author, summary, isbn, added, times],
+    (err, res) => {
+      console.log(res);
+    }
+  );
 });
 
 app.put("/api/updateSingleField", (req, res) => {
@@ -39,7 +43,7 @@ app.put("/api/updateSingleField", (req, res) => {
     if (err) console.log(err);
   });
 });
-``
+``;
 
 app.get("/api/getBooks", (req, res) => {
   const sqlSelect =
@@ -75,7 +79,6 @@ app.put("/api/updateBook", (req, res) => {
     if (err) console.log(err);
   });
 });
-
 
 app.listen(3001, () => {
   console.log("Siamo sulla port 3001");
