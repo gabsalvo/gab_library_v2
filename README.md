@@ -9,3 +9,6 @@ GAB LIBRARY
 4. Build and run the containers: Now, all you have to do is run sudo docker-compose up --build. This command will use the Dockerfile and docker-compose.yml files to build the images and create the necessary containers. Make sure any environment variables or configurations your app needs are set up on this laptop as well.
 
 5. Test the app: When the containers are up and running, you can access your app in a browser or use any other method you usually use to interact with it. Give it a test run and make sure everything's working as expected. If you run into any issues, you'll need to debug them.
+
+upgrade to the latest npm version
+In the root folder touch .env and micro .env, REACT_APP_API_BASE_URL=http://localhost:3001
