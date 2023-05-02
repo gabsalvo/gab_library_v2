@@ -1,3 +1,5 @@
+GAB LIBRARY
+
 1. Clone the Git repository: First, make sure you've got Git installed on the other laptop. Then, open up the terminal and run git clone <your-repo-url> to clone your project repository. This will create a local copy of your project, including the Dockerfile, docker-compose.yml, and all the other necessary files.
 
 2. Install Docker and Docker Compose: Next, you need to check if Docker and Docker Compose are installed on the other laptop. If not, go ahead and follow the official installation guides for Docker and Docker Compose.
