@@ -38,21 +38,23 @@ function App() {
   };
 
   const updateSingleField = () => {
-    Axios.put(`http://localhost:3001/api/updateSingleField`, {
+    Axios.put(`${apiBaseUrl}/api/updateSingleField`, {
       title: selectedBook.title,
       field: selectedUpdateField,
       value: singleUpdateValue,
     }).then(() => {
-      Axios.get("http://localhost:3001/api/getBooks").then((response) => {
+      Axios.get(`${apiBaseUrl}/api/getBooks`).then((response) => {
         setBookList(response.data);
       });
     });
 
     setIsPopupVisibleSingleUpdate(false);
   };
+  
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/getBooks").then((response) => {
+    Axios.get(`${apiBaseUrl}/api/getBooks`).then((response) => {
       setBookList(response.data);
     });
   }, []);
@@ -62,18 +64,18 @@ function App() {
   }
 
   const newBook = (book) => {
-    Axios.post("http://localhost:3001/api/newBook", book);
+    Axios.post(`${apiBaseUrl}/api/newBook`, book);
 
     setBookList([...bookList, book]);
   };
 
   const deleteBook = (title_delete) => {
-    Axios.delete(`http://localhost:3001/api/deleteBook/${title_delete}`);
+    Axios.delete(`${apiBaseUrl}/api/deleteBook/${title_delete}`);
     setBookList(bookList.filter((book) => book.title !== title_delete));
   };
 
   const updateBook = (title, updatedBook) => {
-    Axios.put(`http://localhost:3001/api/updateBook`, {
+    Axios.put(`${apiBaseUrl}/api/updateBook`, {
       title: title,
       author: updatedBook.author,
       summary: updatedBook.summary,
@@ -81,7 +83,7 @@ function App() {
       added: updatedBook.added,
       times: parseInt(updatedBook.times, 10),
     }).then(() => {
-      Axios.get("http://localhost:3001/api/getBooks").then((response) => {
+      Axios.get(`${apiBaseUrl}/api/getBooks`).then((response) => {
         setBookList(response.data);
       });
     });
